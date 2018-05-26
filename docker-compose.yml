@@ -1,0 +1,22 @@
+# The "docker-compose up -d" command will, by default, find and run the
+# docker-compose.yml file and create those services.
+
+version: '2'
+services:
+  jumpay:
+      build: .
+      container_name: jumpay
+      networks:
+          - servers_external_network
+      ports:
+          - 94:80
+      env_file:
+          - ./.env
+      tty: true
+      volumes:
+          - .:/src
+          - .:/usr/src/app
+          - ./bin/log/jumpay:/var/log/application/jumpay
+networks:
+  servers_external_network:
+    external: true
